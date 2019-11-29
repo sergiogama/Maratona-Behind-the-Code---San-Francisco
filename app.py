@@ -6,6 +6,7 @@ import json
 import numpy as np
 import io
 from PIL import Image
+import base64
 
 app = Flask(__name__)
 app.config.from_object(__name__)
