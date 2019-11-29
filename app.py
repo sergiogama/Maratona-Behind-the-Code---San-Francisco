@@ -19,11 +19,11 @@ def result():
     print(request)
     
     # Receber dados IoT
-    device = {"typeId": "maratona", "deviceId": "d9"}
+    device = {"typeId": "maratona", "deviceId": "maratona_1"}
     eventId = 'sensor'
     options = { "auth": {
-        "key": "a-behpop-1pcr3iw5hu",
-        "token": "Lats2T@i_CqhMYzMRs"
+        "key": "a-dhpz8n-9qnqykz0na",
+        "token": "CN0vxYYN7?8AZmsJRr"
     }}
     appClient = wiotp.sdk.application.ApplicationClient(options)
     lastEvent = appClient.lec.get(device, eventId)
