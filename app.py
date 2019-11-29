@@ -18,13 +18,32 @@ def hello():
 def result():
     print(request)
     
-    # Implemente sua lógica aqui e insira as respostas na variável 'resposta'
+    # Receber dados IoT
+    device = {"typeId": "maratona", "deviceId": "d9"}
+    eventId = 'sensor'
+    options = { "auth": {
+        "key": "a-behpop-1pcr3iw5hu",
+        "token": "Lats2T@i_CqhMYzMRs"
+    }}
+    appClient = wiotp.sdk.application.ApplicationClient(options)
+    lastEvent = appClient.lec.get(device, eventId)
+    iotData = json.loads(base64.b64decode(lastEvent['payload']).decode('utf-8'))['data']
+
+    # Calculos
+    # ITU = T - 0.55 (1 - UR )( T - 14 )
+    itu = iotData['temperatura'] - (0.55 * (1 - iotData['umidade_ar']) * (iotData['temperatura'] - 14))
+    
+    # Volume Agua = (4 * pi * r^3)/2 * us
+    va = ((4 * 3.14)/6) * iotData['umidade_solo']
+    
+    # Fahrenheit f = (c * 9/5) + 32
+    fr = (iotData['temperatura']*(9/5)) + 32
     
     resposta = {
-        "iotData": "data",
-        "itu": "data",
-        "volumeAgua": "data",
-        "fahrenheit": "data"
+        "iotData": iotData,
+        "itu": itu,
+        "volumeAgua": va,
+        "fahrenheit": fr
     }
     response = app.response_class(
         response=json.dumps(resposta),
@@ -48,9 +67,16 @@ def predict():
     image = prepare_image(image)
 
     # Faça uma requisição para o serviço Watson Machine Learning aqui e retorne a classe detectada na variável 'resposta'
+    client = WatsonMachineLearningAPIClient( wml_credentials )
+    ai_parms = { "wml_credentials" : wml_credentials, "model_endpoint_url" : "https://us-south.ml.cloud.ibm.com/v3/wml_instances/a8f286bb-6e41-4ddf-a97b-340ffcd6d33e/deployments/2193bbe9-3f93-4330-8b5a-11c202b1d795/online" }
+    model_payload = { "values" : image }
+    model_result = client.deployments.score( ai_parms["model_endpoint_url"], model_payload )
+    data = model_result
+    classes = ['CLEAN', 'DIRTY']
+    index = data['values'][0][0].index(max(data['values'][0][0]))
     
     resposta = {
-        "class": "data"
+        "class": classes[index]
     }
     return resposta
 
