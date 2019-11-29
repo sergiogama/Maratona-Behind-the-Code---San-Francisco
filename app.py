@@ -8,6 +8,8 @@ import io
 from PIL import Image
 import base64
 
+
+
 app = Flask(__name__)
 app.config.from_object(__name__)
 port = int(os.getenv('PORT', 8080))
@@ -30,6 +32,7 @@ def result():
     }}
     appClient = wiotp.sdk.application.ApplicationClient(options)
     lastEvent = appClient.lec.get(device, eventId)
+    print(lastEvent)
     iotData = json.loads(base64.b64decode(lastEvent['payload']).decode('utf-8'))['data']
 
     # Calculos
