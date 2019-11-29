@@ -1,3 +1,5 @@
+from watson_machine_learning_client import WatsonMachineLearningAPIClient
+import wiotp.sdk.application
 from flask import Flask, render_template, request, json, jsonify
 import os
 import json
