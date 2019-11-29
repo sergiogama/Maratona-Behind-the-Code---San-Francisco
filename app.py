@@ -8,7 +8,7 @@ import io
 from PIL import Image
 import base64
 
-wml_credentials  = {
+wml_credentials={
   "apikey": "F4-lBflj4TwuBT8Yj21qiCIN1X7UPTMIYN2mDXa-FuxW",
   "iam_apikey_description": "Auto generated apikey during resource-key operation for Instance - crn:v1:bluemix:public:pm-20:us-south:a/5086f0d78cb04b3aabd7b046c5c84a10:a8f286bb-6e41-4ddf-a97b-340ffcd6d33e::",
   "iam_apikey_name": "auto-generated-apikey-e56daaf9-fb14-47ae-890a-b700d8a03a7d",
@@ -87,6 +87,7 @@ def predict():
     model_result = client.deployments.score( ai_parms["model_endpoint_url"], model_payload )
     data = model_result
     classes = ['CLEAN', 'DIRTY']
+    print(data)
     index = data['values'][0][0].index(max(data['values'][0][0]))
     
     resposta = {
