@@ -33,7 +33,7 @@ def result():
     appClient = wiotp.sdk.application.ApplicationClient(options)
     lastEvent = appClient.lec.get(device, eventId)
     print(lastEvent)
-    iotData = json.loads(base64.b64decode(lastEvent['payload']).decode('utf-8'))['data']
+    iotData = json.loads(base64.b64decode(lastEvent['payload']).decode('utf-8'))
 
     # Calculos
     # ITU = T - 0.55 (1 - UR )( T - 14 )
