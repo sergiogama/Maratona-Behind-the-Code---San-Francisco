@@ -8,7 +8,15 @@ import io
 from PIL import Image
 import base64
 
-
+wml_credentials  = {
+  "apikey": "F4-lBflj4TwuBT8Yj21qiCIN1X7UPTMIYN2mDXa-FuxW",
+  "iam_apikey_description": "Auto generated apikey during resource-key operation for Instance - crn:v1:bluemix:public:pm-20:us-south:a/5086f0d78cb04b3aabd7b046c5c84a10:a8f286bb-6e41-4ddf-a97b-340ffcd6d33e::",
+  "iam_apikey_name": "auto-generated-apikey-e56daaf9-fb14-47ae-890a-b700d8a03a7d",
+  "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/5086f0d78cb04b3aabd7b046c5c84a10::serviceid:ServiceId-c2399bed-c92e-4d5f-9c35-d5aae1725952",
+  "instance_id": "a8f286bb-6e41-4ddf-a97b-340ffcd6d33e",
+  "url": "https://us-south.ml.cloud.ibm.com"
+}
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -74,7 +82,7 @@ def predict():
 
     # Faça uma requisição para o serviço Watson Machine Learning aqui e retorne a classe detectada na variável 'resposta'
     client = WatsonMachineLearningAPIClient( wml_credentials )
-    ai_parms = { "wml_credentials" : wml_credentials, "model_endpoint_url" : "https://us-south.ml.cloud.ibm.com/v3/wml_instances/a8f286bb-6e41-4ddf-a97b-340ffcd6d33e/deployments/2193bbe9-3f93-4330-8b5a-11c202b1d795/online" }
+    ai_parms = { "wml_credentials" : wml_credentials, "model_endpoint_url" : "https://us-south.ml.cloud.ibm.com/v3/wml_instances/a8f286bb-6e41-4ddf-a97b-340ffcd6d33e/deployments/610327f1-d185-4094-ac38-98d5b6bfba0b/online" }
     model_payload = { "values" : image }
     model_result = client.deployments.score( ai_parms["model_endpoint_url"], model_payload )
     data = model_result
